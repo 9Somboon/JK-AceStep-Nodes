@@ -3,6 +3,7 @@ import os
 import re
 import urllib.error
 import urllib.request
+import random
 
 try:
     import folder_paths
@@ -53,6 +54,14 @@ class AceStepGeminiLyrics:
                         "step": 128,
                     },
                 ),
+                "seed": (
+                    "INT",
+                    {
+                        "default": 0,
+                        "min": 0,
+                        "max": 0xffffffffffffffff,
+                    },
+                ),
             }
         }
 
@@ -61,7 +70,7 @@ class AceStepGeminiLyrics:
     FUNCTION = "generate"
     CATEGORY = "JK AceStep Nodes/Gemini"
 
-    def _build_prompt(self, style: str) -> str:
+    def _build_prompt(self, style: str, seed: int) -> str:
         base_style = style.strip() or "Generic song"
         allowed_tags = (
             "Use ONLY these section tags in square brackets (no numbers): [Intro], [Verse], [Pre-Chorus], [Chorus], "
@@ -74,7 +83,8 @@ class AceStepGeminiLyrics:
             f"{allowed_tags} Never use parentheses for section labels. "
             "Keep it concise and coherent."
         )
-        return f"Style: {base_style}. {instructions}"
+        # Include seed in prompt to make each generation unique for ComfyUI
+        return f"Style: {base_style}. {instructions} [Generation seed: {seed}]"
 
     def _call_gemini(self, api_key: str, model: str, prompt: str, max_tokens: int = 1024):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
@@ -155,15 +165,19 @@ class AceStepGeminiLyrics:
             normalized_lines.append(line)
         return "\n".join(normalized_lines).strip()
 
-    def generate(self, style: str, api_key: str, model: str, max_tokens: int):
+    def generate(self, style: str, api_key: str, model: str, max_tokens: int, seed: int, control_before_generate=None):
         api_key = api_key.strip()
         if not api_key:
             return {"ui": {"text": ["[Gemini] API key is missing."]}, "result": ("[Gemini] API key is missing.",)}
 
-        prompt = self._build_prompt(style)
+        prompt = self._build_prompt(style, seed)
         lyrics, error = self._call_gemini(api_key=api_key, model=model, prompt=prompt, max_tokens=max_tokens)
         output_text = error or lyrics
-        return {"ui": {"text": [output_text]}, "result": (output_text,)}
+        
+        return {
+            "ui": {"text": [output_text]}, 
+            "result": (output_text,)
+        }
 
 
 class AceStepSaveText:
