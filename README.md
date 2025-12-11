@@ -309,6 +309,8 @@ JK-AceStep-Nodes/
 
 To enable audio conversion with the vocoder (for improved final audio quality):
 
+https://huggingface.co/ACE-Step/ACE-Step-v1-3.5B/tree/main/music_vocoder
+
 1. **Obtain the vocoder files:**
    - `diffusion_pytorch_model.safetensors` (vocoder model)
    - `config.json` (vocoder configuration)
