@@ -117,7 +117,7 @@ class AceStepLMStudioLyrics:
             }
         )
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:  # Longer timeout for local models
+            with urllib.request.urlopen(req, timeout=240) as resp:  # Longer timeout for local models
                 response_body = resp.read()
         except urllib.error.HTTPError as e:
             error_detail = e.read().decode("utf-8", errors="ignore") if hasattr(e, "read") else str(e)
