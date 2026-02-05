@@ -274,6 +274,8 @@ class AceStepGeminiLyrics:
                 ),
                 "model": (
                     [
+                        "gemini-3-flash-preview",
+                        "gemini-3-pro-preview",
                         "gemini-2.5-flash",
                         "gemini-2.5-flash-latest",
                         "gemini-2.5-flash-lite",
