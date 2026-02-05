@@ -440,15 +440,17 @@ class AceStepGroqLyrics:
                 ),
                 "model": (
                     [
-                        "llama-3.3-70b-versatile",
-                        "llama-3.1-8b-instant",
-                        "llama-3.2-1b-preview",
-                        "llama-3.2-3b-preview",
-                        "openai/gpt-oss-120b",
-                        "openai/gpt-oss-20b",
-                        "meta-llama/llama-guard-3-8b",
-                        "meta-llama/llama-4-scout-17b-16e-instruct",
-                        "meta-llama/llama-4-maverick-17b-128e-instruct",
+                        # Production Models
+                        "llama-3.3-70b-versatile",       # Llama 3.3 70B
+                        "llama-3.1-8b-instant",          # Llama 3.1 8B
+                        "openai/gpt-oss-120b",           # GPT OSS 120B (Featured)
+                        "openai/gpt-oss-20b",            # GPT OSS 20B
+                        "meta-llama/llama-guard-4-12b",  # Llama Guard 4 12B
+                        # Preview Models
+                        "meta-llama/llama-4-maverick-17b-128e-instruct",  # Llama 4 Maverick
+                        "meta-llama/llama-4-scout-17b-16e-instruct",      # Llama 4 Scout
+                        "qwen/qwen3-32b",                # Qwen3 32B
+                        "moonshotai/kimi-k2-instruct-0905",  # Kimi K2
                     ],
                     {
                         "default": "llama-3.3-70b-versatile",
